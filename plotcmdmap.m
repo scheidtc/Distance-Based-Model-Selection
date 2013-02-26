@@ -9,23 +9,23 @@ function plotcmdmap(Xd,KKM)
 
 %% Input Parameters:
 % - Xd: location of the points to be plotted (from MDS). Rows of Xd are the coordinates in p-dimensional space
-% - KKM: results from the clustering in the format given by the function kernel_kmedoid. This is optional.  
+% - KKM: results from the clustering in the format given by the function kkmedoid. This is optional.  
     % If given, point are colored by clusters; medoids are represented by squares 
 
 if nargin ==2
     
     % definition of the color of each cluster
-    C  = colormap(jet(64));
-    C = C(floor(linspace(1,64,max(KKM.T))),:);
+    C  = jet;
+    C = C(floor(linspace(1,size(C,1),max(KKM.label))),:);
 
     figure
     for i=1:length(KKM.medoids)
-        plot(Xd(KKM.T==i,1), Xd(KKM.T==i,2), 'o', 'Color',C(i,:), ...  % points in clusters
+        plot(Xd(KKM.label==i,1), Xd(KKM.label==i,2), 'o', 'Color',C(i,:), ...  % points in clusters
             'MarkerSize', 8, 'LineWidth', 1.3,'MarkerFaceColor',C(i,:), ...
             'MarkerEdgeColor','k');
 
         hold on
-        plot(Xd(KKM.medoids(i),1), Xd(KKM.medoids(i),2), 'bs', ...          % medoid
+        plot(Xd(KKM.medoids(i),1), Xd(KKM.medoids(i),2), 'bs', ...          % medoids
             'MarkerSize', 12, 'LineWidth', 2,'MarkerFaceColor',C(i,:), ...
             'MarkerEdgeColor','k');
     end
